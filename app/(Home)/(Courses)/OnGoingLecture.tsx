@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import CustomText from "@/components/CustomText";
+import { theme } from "@/constants/Colors";
+import { OnGoingLectures } from "@/components/Lecture";
 
 const OnGoingLecture = () => {
   return (
     <View style={styles.container}>
-      <CustomText>OnGoingLectures</CustomText>
+      <OnGoingLectures />
     </View>
   );
 };
@@ -15,9 +16,6 @@ export default OnGoingLecture;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 30,
+    backgroundColor: theme.colors.lightGray,
   },
 });

@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   Image,
   StyleSheet,
-  SafeAreaView,
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { useLocalSearchParams, router, Link } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { AuthContext } from "@/app/utils/authContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Import custom components/Files
 import CustomText from "@/components/CustomText";
 import { theme } from "@/constants/Colors";
 import PasswordIcon from "@/assets/images/password-lock.svg";
-import { validatePassword, setPassword, registerUser } from "@/app/utils/auth";
+import { validatePassword, registerUser } from "@/app/utils/auth";
 
 const SetPasswordScreen: React.FC = () => {
   const { phoneNumber, name } = useLocalSearchParams();
@@ -52,18 +52,18 @@ const SetPasswordScreen: React.FC = () => {
       setErrorMessage("");
     }
   };
-  // TODO: create userId, new user and save the user in the secure-store.
+
   const handleSubmitPassword = async () => {
     if (validatePassword(password)) {
       setIsLoading(true);
 
       try {
-        const newUser = await registerUser(name!, phoneNumber!, password); // Fixed: Added '!' to name and phoneNumber
+        const newUser = await registerUser(name!, phoneNumber!, password);
         login(newUser);
 
         router.push({
           pathname: "/(Home)",
-          params: { name: name!, phoneNumber: phoneNumber! }, // Fixed: Added '!' to name and phoneNumber
+          params: { name: name!, phoneNumber: phoneNumber! },
         });
       } catch (error) {
         console.error("Error registering user:", error);
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     height: undefined,
     borderRadius: 10,
     marginBottom: 20,
-    marginVertical: 120,
+    marginTop: 50,
   },
   title: {
     fontSize: 26,

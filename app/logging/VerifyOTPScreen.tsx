@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  Image,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router, Link } from "expo-router";
 import CustomText from "@/components/CustomText";
-import { verifyOTP } from "@/app/utils/auth";
+import { verifyOTP, sendOTP } from "@/app/utils/auth";
 import {
   CodeField,
   Cursor,
@@ -58,11 +52,19 @@ const VerifyOTPScreen: React.FC = () => {
     }
   }, [canResend, timer]);
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     console.log("Resending OTP...");
     // TODO: (Implementation to resend OTP)
     // Reset the timer and disable resending
-    setCanResend(false);
+    const otpSend = await sendOTP(phoneNumber);
+    if (otpSend) {
+      Alert.alert("Success", "OTP sent successfully.");
+      setValue("");
+      setCanResend(false);
+    } else {
+      Alert.alert("Error", "Failed to send OTP. Please try again.");
+      setValue("");
+    }
     setTimer(INITIAL_RESEND_DELAY);
     timerRef.current = setTimeout(() => {
       setCanResend(true);
@@ -166,14 +168,12 @@ const VerifyOTPScreen: React.FC = () => {
       <TouchableOpacity style={styles.verifyButton} onPress={handleVerifyOTP}>
         <CustomText style={styles.verifyButtonText}>Verify</CustomText>
       </TouchableOpacity>
-      <Link href="/logging/LoginScreen">Login Screen</Link>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
-    marginTop: 25,
     flex: 1,
     minHeight: 300,
     alignItems: "center",
@@ -181,7 +181,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   OTPImage: {
-    width: 240,
     height: undefined,
     aspectRatio: 1,
     resizeMode: "contain",

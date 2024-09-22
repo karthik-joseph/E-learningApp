@@ -5,7 +5,7 @@ import CustomText from "@/components/CustomText";
 const index = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <CustomText>Today's lecture</CustomText>
+      <CustomText>Index</CustomText>
     </SafeAreaView>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Tabs } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 
@@ -7,7 +7,6 @@ import HomeG from "@/assets/images/Home g.svg";
 import HomeB from "@/assets/images/Home b.svg";
 import ClassLight from "@/assets/images/class-light.svg";
 import ClassBlue from "@/assets/images/class-dark.svg";
-import ProfileB from "@/assets/images/profile.svg";
 import { theme } from "@/constants/Colors";
 
 const Home = () => {
@@ -69,14 +68,17 @@ const Home = () => {
           title: "Lecture",
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <ProfileB
-                style={[
-                  styles.iconStyle,
-                  { backgroundColor: theme.colors.darkBlue },
-                ]}
+              <Image
+                source={require("@/assets/icons/male-user-blue.png")}
+                alt="user"
+                style={styles.iconStyleUser}
               />
             ) : (
-              <ProfileB style={styles.iconStyle} />
+              <Image
+                source={require("@/assets/icons/male-user-gray.png")}
+                alt="user"
+                style={styles.iconStyleUser}
+              />
             ),
         }}
       />
@@ -85,6 +87,12 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  iconStyleUser: {
+    width: 28,
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: "contain",
+  },
   iconStyle: {
     width: "100%",
     height: undefined,

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
 
 // Import custom components
@@ -52,6 +59,7 @@ const LoginScreen: React.FC = () => {
             pathname: "/logging/VerifyOTPScreen",
             params: { phoneNumber: fullNumber, flow: "login" },
           });
+          setPhoneNumber("");
         } else {
           setErrorMessage("Failed to send OTP. Please try again.");
         }
@@ -81,12 +89,12 @@ const LoginScreen: React.FC = () => {
 
   const handleCancelAlert = () => {
     setShowAlert(false);
-    setIsLoading(false); // Reset loading state when alert is cancelled
+    setIsLoading(false);
     setPhoneNumber("");
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image
         source={require("@/assets/images/login-page.jpg")}
         alt="login-page"
@@ -112,7 +120,7 @@ const LoginScreen: React.FC = () => {
         disabled={isLoading || !!errorMessage}
       >
         <CustomText style={styles.buttonText}>
-          {isLoading ? "Processing..." : "Join Now"}
+          {isLoading ? <ActivityIndicator color="#fff" /> : "Join Now"}
         </CustomText>
       </TouchableOpacity>
 
@@ -129,7 +137,7 @@ const LoginScreen: React.FC = () => {
         onCancel={handleCancelAlert}
         onConfirm={handleCreateAccount}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

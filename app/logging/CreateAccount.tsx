@@ -1,13 +1,14 @@
 import { Link, router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   Image,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Import custom files
 import Profile from "@/assets/images/profile.svg";
@@ -144,15 +145,9 @@ const CreateAccount = () => {
       {/* ContentContainer */}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <CustomText style={styles.submitButtonText}>
-          {isLoading ? "Processing..." : "Submit"}
+          {isLoading ? <ActivityIndicator color="#fff" /> : "Submit"}
         </CustomText>
       </TouchableOpacity>
-      <CustomText>
-        Already have an account{" "}
-        <Link href="/logging/LoginScreen" style={styles.loginText}>
-          Log in
-        </Link>
-      </CustomText>
     </SafeAreaView>
   );
 };
@@ -254,21 +249,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: theme.colors.buttonText,
   },
-  loginText: {
-    color: theme.colors.violet2,
-    fontSize: 15,
-    fontWeight: "bold",
-    textDecorationLine: "underline",
-    marginTop: 10,
-    marginBottom: 20,
-  },
   errorMessage: {
     color: theme.colors.red,
     fontSize: 15,
     fontWeight: "500",
     textAlign: "center",
     padding: 5,
-    marginBottom: -10,
+    marginBottom: 10,
   },
 });
 
