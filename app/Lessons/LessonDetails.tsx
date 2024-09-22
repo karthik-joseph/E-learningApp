@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CustomText from "@/components/CustomText";
 import { theme } from "@/constants/Colors";
 import { useNavigation } from "expo-router";
+import CompletedCircle from "@/assets/images/completed.svg";
 
 const LessonItem = ({ title, duration, isCompleted, isLocked }) => (
   <View style={styles.lessonItem}>
@@ -151,6 +152,7 @@ const LessonDetails = () => {
             </CustomText>
           </View>
           <TouchableOpacity style={styles.completeButton}>
+            <CompletedCircle width={20} height={20} />
             <CustomText style={styles.completeButtonText}>
               Mark as Completed
             </CustomText>
@@ -217,15 +219,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   completeButton: {
-    borderWidth: 2,
-    borderStyle: "dotted",
+    borderWidth: 1,
     borderColor: theme.colors.violet2,
     padding: 10,
     borderRadius: 5,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   completeButtonText: {
     color: theme.colors.violet,
     fontWeight: "bold",
+    fontSize: 12,
+    marginLeft: 10,
   },
   lessonSection: {
     marginBottom: 20,
