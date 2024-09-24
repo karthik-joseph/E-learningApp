@@ -144,7 +144,7 @@ const HomeScreen: React.FC = () => {
           <Image
             source={require("@/assets/images/3d-art-illution.jpg")}
             alt="3d Art Illution Image"
-            style={styles.artsImage}
+            style={[styles.artsImage, { backgroundColor: "transparent" }]}
           />
         </View>
       </View>
