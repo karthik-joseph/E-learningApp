@@ -1,5 +1,5 @@
 import CustomText from "@/components/CustomText";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -26,10 +26,7 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-      // Prevent default back navigation on Home screen
       e.preventDefault();
-
-      // Exit the app
       BackHandler.exitApp();
     });
 
@@ -79,6 +76,27 @@ const HomeScreen: React.FC = () => {
 
   const SimpleImageSlider = ({ courses }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const timer = useRef(null);
+    const scrollViewRef = useRef(null);
+    const [direction, setDirection] = useState(1);
+
+    useEffect(() => {
+      timer.current = setInterval(() => {
+        setActiveIndex((prevIndex) => {
+          const nextIndex =
+            (prevIndex + direction + courses.length) % courses.length;
+          scrollViewRef.current?.scrollTo({
+            x: nextIndex * screenWidth,
+            animated: true,
+          });
+          return nextIndex;
+        });
+      }, 2500);
+
+      return () => {
+        clearInterval(timer.current);
+      };
+    }, [courses.length, direction]);
 
     const handleScroll = (event) => {
       const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -90,11 +108,13 @@ const HomeScreen: React.FC = () => {
     return (
       <View>
         <ScrollView
+          ref={scrollViewRef}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onScroll={handleScroll}
           scrollEventThrottle={16}
+          contentContainerStyle={{ width: courses.length * screenWidth }}
         >
           {courses.map((course, index) => (
             <View key={index} style={{ width: screenWidth }}>
@@ -283,6 +303,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginHorizontal: 15,
     marginTop: 20,
+    paddingBottom: 35,
   },
   contentContainer: {
     flex: 1,
@@ -347,18 +368,19 @@ const styles = StyleSheet.create({
   pagination: {
     flexDirection: "row",
     position: "absolute",
-    bottom: -20,
+    bottom: 12,
     alignSelf: "center",
   },
   paginationDot: {
     width: 8,
     height: 8,
     borderRadius: 25,
-    backgroundColor: theme.colors.violet,
+    backgroundColor: theme.colors.white,
     marginRight: 8,
   },
   paginationDotActive: {
     width: 25,
+    backgroundColor: theme.colors.darkBlue,
   },
   coursesContainer: {
     width: "100%",
