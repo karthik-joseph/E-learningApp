@@ -129,7 +129,7 @@ const LessonDetails = () => {
         <Ionicons
           name="arrow-back-outline"
           size={24}
-          color="#8B5CF6"
+          color={theme.colors.white}
           style={styles.backNavigationIcon}
         />
         <CustomText style={styles.backNavigationTitle}>Go Back</CustomText>
