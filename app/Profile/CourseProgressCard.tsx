@@ -1,14 +1,27 @@
 // CourseProgressCard.js
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "@/constants/Colors";
-import CustomText from "../CustomText";
+import CustomText from "../../components/CustomText";
+import { useRouter } from "expo-router";
 
 const CourseProgressCard = ({ course }) => {
+  const router = useRouter();
   return course.map((item) => (
-    <View
+    <TouchableOpacity
       key={item.id}
-      style={[styles.container, { backgroundColor: `${item.bg}` }]}
+      style={[
+        styles.container,
+        { backgroundColor: `${item.bg}`, shadowColor: `${item.bg}` },
+      ]}
+      onPress={() => {
+        router.push({
+          pathname: "/Lessons/LessonDetails",
+          params: {
+            videoUrl: item.videoUrl,
+          },
+        });
+      }}
     >
       <CustomText style={styles.courseTitle}>{item.CourseTitle}</CustomText>
       <CustomText style={styles.timeSpent}>
@@ -20,7 +33,7 @@ const CourseProgressCard = ({ course }) => {
           <View style={[styles.progress, { width: `${item.progress}%` }]} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   ));
 };
 
@@ -31,7 +44,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     width: 220,
     height: 120,
-    marginRight: 20,
+    marginRight: 14,
   },
   courseTitle: {
     fontSize: 18,
@@ -57,13 +70,18 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   progressBar: {
-    height: 8,
-    borderWidth: 0.8,
+    height: 10,
     opacity: 0.8,
     borderRadius: 4,
-    borderColor: "transparent",
     marginVertical: 4,
-    width: "100%",
+    width: "90%",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 2,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "transparent",
   },
   progress: {
     height: "100%",

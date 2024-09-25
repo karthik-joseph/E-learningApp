@@ -174,14 +174,20 @@ const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.userInfo}>
-            <Image
-              source={require("@/assets/images/person.jpg")}
-              alt="Person Photo"
-              style={styles.userImage}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                router.push("/Profile/");
+              }}
+            >
+              <Image
+                source={require("@/assets/images/person.jpg")}
+                alt="Person Photo"
+                style={styles.userImage}
+              />
+            </TouchableOpacity>
             <View>
               <CustomText style={styles.greeting}>
                 Hey, {user?.name ? user?.name : "User"} 👋

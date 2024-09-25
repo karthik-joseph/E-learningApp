@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router, Link } from "expo-router";
 import CustomText from "@/components/CustomText";
@@ -21,6 +28,7 @@ const INITIAL_RESEND_DELAY = 30;
 const VerifyOTPScreen: React.FC = () => {
   const { phoneNumber, flow, name } = useLocalSearchParams();
   const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -54,8 +62,7 @@ const VerifyOTPScreen: React.FC = () => {
 
   const handleResendOTP = async () => {
     console.log("Resending OTP...");
-    // TODO: (Implementation to resend OTP)
-    // Reset the timer and disable resending
+
     const otpSend = await sendOTP(phoneNumber);
     if (otpSend) {
       Alert.alert("Success", "OTP sent successfully.");
@@ -73,6 +80,7 @@ const VerifyOTPScreen: React.FC = () => {
 
   const handleVerifyOTP = async () => {
     try {
+      setIsLoading(true);
       // If the OTP is empty, display an error message and return
       if (value.length < 4) {
         Alert.alert("Error", "Please enter a valid OTP.");
@@ -98,6 +106,8 @@ const VerifyOTPScreen: React.FC = () => {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       Alert.alert("Error", "An error occurred. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -166,7 +176,9 @@ const VerifyOTPScreen: React.FC = () => {
         </CustomText>
       </View>
       <TouchableOpacity style={styles.verifyButton} onPress={handleVerifyOTP}>
-        <CustomText style={styles.verifyButtonText}>Verify</CustomText>
+        <CustomText style={styles.verifyButtonText}>
+          {isLoading ? <ActivityIndicator color="#fff" /> : "Verify"}
+        </CustomText>
       </TouchableOpacity>
     </SafeAreaView>
   );

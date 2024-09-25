@@ -143,7 +143,7 @@ const LessonDetails = () => {
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View>
             <CustomText style={styles.title}>Introduction</CustomText>

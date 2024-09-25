@@ -1,7 +1,7 @@
 // UserProfile.js
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
-import CustomText from "../CustomText";
+import CustomText from "../../components/CustomText";
 import ProfileIcon from "@/assets/images/profile.svg";
 
 const UserProfile = () => {

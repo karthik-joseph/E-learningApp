@@ -104,7 +104,7 @@ const LectureItem = ({ item }) => (
 export const CompletedLectures = () => {
   const router = useRouter();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {lecturesData
         .filter((item) => item.status === "Finished")
         .map((item) => (
@@ -129,7 +129,7 @@ export const CompletedLectures = () => {
 export const OnGoingLectures = () => {
   const router = useRouter();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {lecturesData
         .filter((item) => item.status === "Running...")
         .map((item) => (
@@ -154,7 +154,7 @@ export const OnGoingLectures = () => {
 const Lectures = () => {
   const router = useRouter();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {lecturesData.map((item) => (
         <TouchableOpacity
           onPress={() => {
