@@ -37,6 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
     code: "+91",
     flag: require("@/assets/images/flags/india.png"),
   });
+  const [isFocused, setIsFocused] = useState(false);
 
   const countries: Country[] = useMemo(
     () => [
@@ -145,7 +146,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <BlackArrow style={styles.dropDownArrow} />
       </TouchableOpacity>
 
-      <View style={styles.inputContainer}>
+      <View
+        style={[
+          styles.inputContainer,
+          isFocused && styles.inputContainerFocused,
+        ]}
+      >
         <Phone style={styles.phoneIcon} />
         <CustomText style={styles.countryCodeText}>
           {selectedCountry.code}
@@ -156,6 +162,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
           onChangeText={onChangePhoneNumber}
           keyboardType="phone-pad"
           maxLength={10}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
       </View>
 
@@ -205,6 +213,10 @@ const styles = StyleSheet.create({
     width: "75%",
     paddingHorizontal: 10,
     paddingVertical: 5,
+  },
+  inputContainerFocused: {
+    borderWidth: 2,
+    borderColor: theme.colors.violet2,
   },
   phoneIcon: {
     width: "100%",
