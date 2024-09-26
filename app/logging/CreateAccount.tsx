@@ -23,6 +23,7 @@ const CreateAccount = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [name, SetName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [onFocus, SetOnFocus] = useState(false);
 
   const handlePhoneNumberChange = (text: string) => {
     // Only allow numeric input for phone number
@@ -113,12 +114,21 @@ const CreateAccount = () => {
           <CustomText style={styles.subTitle}>
             Enter your full name for your account.
           </CustomText>
-          <View style={styles.textInputContainer}>
+          <View
+            style={[
+              styles.textInputContainer,
+              onFocus && styles.activeTextInputContainer,
+            ]}
+          >
             <Profile style={styles.profileIcon} />
             <TextInput
               style={styles.inputText}
               value={name}
               onChangeText={handleNameChange}
+              onFocus={() => SetOnFocus(true)}
+              placeholder="Enter name"
+              autoFocus={onFocus}
+              onBlur={() => SetOnFocus(false)}
             />
           </View>
           <View style={styles.phoneNumberContainer}>
@@ -177,6 +187,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     resizeMode: "contain",
   },
+
   infoContainer: {
     width: "100%",
     marginTop: -30,
@@ -203,10 +214,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 10, height: 3 },
     shadowOpacity: 0.25,
     shadowRadius: 1,
-    elevation: 3,
+    elevation: 10,
+  },
+  activeTextInputContainer: {
+    borderColor: theme.colors.violet,
+    borderWidth: 1,
+    shadowColor: theme.colors.violet,
   },
   profileIcon: {
     width: 30,
