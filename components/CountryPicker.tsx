@@ -52,7 +52,9 @@ const CountryPicker: React.FC<CountryPickerProps> = ({
             >
               <Image source={item.flag} style={styles.flag} />
               <CustomText style={styles.text}>{item.name}</CustomText>
-              <CustomText style={styles.text}>{item.code}</CustomText>
+              <CustomText style={[styles.text, { marginLeft: 6 }]}>
+                {item.code}
+              </CustomText>
             </TouchableOpacity>
           )}
         />
