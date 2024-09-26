@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "center",
     padding: 5,
-    marginBottom: 10,
+    marginBottom: 20,
   },
 });
 
