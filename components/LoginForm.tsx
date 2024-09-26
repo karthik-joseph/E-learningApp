@@ -159,7 +159,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <TextInput
           style={styles.input}
           value={phoneNumber}
-          onChangeText={onChangePhoneNumber}
+          onChangeText={handlePhoneNumberChange}
           keyboardType="phone-pad"
           maxLength={10}
           onFocus={() => setIsFocused(true)}
@@ -172,6 +172,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         onClose={() => setIsCountryPickerVisible(false)}
         onSelectCountry={handleCountrySelect}
         countries={countries}
+        selectedCountry={selectedCountry}
       />
     </View>
   );
